@@ -14,8 +14,8 @@ class Data {
         return instance
     }
     
-    var cubedata: [[Int]] = Array(count: 730, repeatedValue: Array(count: 2, repeatedValue: 0))
-    var groupdata: [[Int]] = Array(count: 27, repeatedValue: Array(count: 2, repeatedValue: 0))
+    var cubedata: [[Int]] = Array(count: 730, repeatedValue: Array(count: 3, repeatedValue: 0))
+    var groupdata: [[Int]] = Array(count: 27, repeatedValue: Array(count: 3, repeatedValue: 0))
 
     var cubedata_count : Int = 0
     var groupdata_count : Int = 0
@@ -113,7 +113,9 @@ class Data {
     func increase_groupnumber(pos: Int) {
         for a in 0...groupdata_count-1 {
             if (groupdata[a][0] == pos) {
-                groupdata[a][2] += 1
+                var count = groupdata[a][2]
+                count = count + 1
+                groupdata[a][2] = count
             }
         }
     }

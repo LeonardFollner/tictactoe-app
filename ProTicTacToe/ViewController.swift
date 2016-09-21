@@ -38,7 +38,6 @@ class ViewController: UIViewController {
         
         sceneView.allowsCameraControl = true
         
-        
         let ambientLightNode = SCNNode()
         ambientLightNode.light = SCNLight()
         ambientLightNode.light!.type = SCNLightTypeAmbient
@@ -56,23 +55,28 @@ class ViewController: UIViewController {
         cameraNode.camera = SCNCamera()
         cameraNode.position = SCNVector3Make(0, 0, 50)
         cameraNode.camera?.xFov=110.0
+        
         scene.rootNode.camera = cameraNode.camera
         scene.rootNode.addChildNode(cameraNode)
         scene.rootNode.camera?.automaticallyAdjustsZRange = true
         
         let singletap = UITapGestureRecognizer(target: self, action: #selector(ViewController.taped(_:)))
         let doubletap = UITapGestureRecognizer(target: self, action: #selector(ViewController.doubletaped(_:)))
+        let cheat = UITapGestureRecognizer(target: self, action: #selector(ViewController.cheat(_:)))
+        cheat.numberOfTapsRequired=2
+        cheat.numberOfTouchesRequired=2
         doubletap.numberOfTapsRequired = 2
         singletap.requireGestureRecognizerToFail(doubletap)
+
         
         sceneView.addGestureRecognizer(singletap)
         sceneView.addGestureRecognizer(doubletap)
+        sceneView.addGestureRecognizer(cheat) //activate to enable cheating //TODO
         sceneView.scene = scene
         
     }
     
     func doubletaped(sender: UITapGestureRecognizer) {
-        
         
         let move = SCNAction.moveTo(SCNVector3Make(0, 0, 50), duration: 0.7)
         let look = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.7)
@@ -85,8 +89,20 @@ class ViewController: UIViewController {
         sceneView.pointOfView!.runAction(look)
         
         sceneView.playing = true
-        
     }
+    
+    
+    func cheat(sender: UITapGestureRecognizer){
+        if(logic.cheat){
+            logic.cheat = false
+            NSLog("cheat off")
+        }else{
+            logic.cheat = true
+            NSLog("cheat on")
+        }
+        doubletaped(sender)
+    }
+    
     func taped(sender: UITapGestureRecognizer) {
         let location: CGPoint = sender.locationInView(self.sceneView)
         let hits = self.sceneView.hitTest(location, options: nil)

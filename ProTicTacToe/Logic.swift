@@ -9,7 +9,9 @@
 import Foundation
 
 class Logic {
-
+    //MARK: Debug
+    var cheat = false
+    
     // game variables
     var turns: Int = 0
     var free: Bool = true
@@ -215,7 +217,6 @@ class Logic {
         
         bigCube = id / 1000
         smallCube = id % 1000
-        let cheat = false //MARK: Debug
         if (valid_cube()||cheat) {
             turns += 1
             Data.get_instance().increase_groupnumber(bigCube)
@@ -242,6 +243,7 @@ class Logic {
                 player = 1
             }
             nextCube = smallCube
+            full()
         }
         return cubeOwner
     }
