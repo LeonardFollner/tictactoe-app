@@ -13,8 +13,8 @@ class ViewController: UIViewController {
     // UI
     @IBOutlet weak var sceneView: SCNView!
     
-    // Geometry
-    var geometryNode: SCNNode = SCNNode()
+    // main
+    var mainNode: SCNNode = SCNNode()
     
     
     // MARK: Lifecycle
@@ -26,8 +26,8 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         
         sceneSetup()
-        geometryNode = Molecules.game()
-        sceneView.scene!.rootNode.addChildNode(geometryNode)
+        mainNode = Cube.redraw_cube()
+        sceneView.scene!.rootNode.addChildNode(mainNode)
     }
 
     // MARK: Scene
@@ -87,6 +87,8 @@ class ViewController: UIViewController {
         let hits = self.sceneView.hitTest(location, options: nil)
         if (hits.first?.node) != nil {
             hits.first?.node.hidden = true
+
+            //TODO give data to logik
         }
     }
     
