@@ -7,19 +7,95 @@
 //
 
 import UIKit
+import SceneKit
 
 class ViewController: UIViewController {
-
+    // UI
+    @IBOutlet weak var sceneView: SCNView!
+    
+    // Geometry
+    var geometryNode: SCNNode = SCNNode()
+    
+    
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        sceneSetup()
+        geometryNode = Molecules.game()
+        sceneView.scene!.rootNode.addChildNode(geometryNode)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // MARK: Scene
+    func sceneSetup() {
+        let scene = SCNScene()
+        
+        sceneView.allowsCameraControl = true
+        
+        
+        let ambientLightNode = SCNNode()
+        ambientLightNode.light = SCNLight()
+        ambientLightNode.light!.type = SCNLightTypeAmbient
+        ambientLightNode.light!.color = UIColor(white: 0.67, alpha: 1.0)
+        scene.rootNode.addChildNode(ambientLightNode)
+        
+        let omniLightNode = SCNNode()
+        omniLightNode.light = SCNLight()
+        omniLightNode.light!.type = SCNLightTypeOmni
+        omniLightNode.light!.color = UIColor(white: 0.75, alpha: 1.0)
+        omniLightNode.position = SCNVector3Make(0, 50, 50)
+        scene.rootNode.addChildNode(omniLightNode)
+        
+        let cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        cameraNode.position = SCNVector3Make(0, 0, 50)
+        cameraNode.camera?.xFov=110.0
+        scene.rootNode.camera = cameraNode.camera
+        scene.rootNode.addChildNode(cameraNode)
+        scene.rootNode.camera?.automaticallyAdjustsZRange = true
+        
+        let singletap = UITapGestureRecognizer(target: self, action: #selector(ViewController.taped(_:)))
+        let doubletap = UITapGestureRecognizer(target: self, action: #selector(ViewController.doubletaped(_:)))
+        doubletap.numberOfTapsRequired = 2
+        singletap.requireGestureRecognizerToFail(doubletap)
+        
+        sceneView.addGestureRecognizer(singletap)
+        sceneView.addGestureRecognizer(doubletap)
+        sceneView.scene = scene
+        
+    }
+    
+    func doubletaped(sender: UITapGestureRecognizer) {
+        
+        sceneView.pointOfView!.camera?.xFov = 110.0
+        let move = SCNAction.moveTo(SCNVector3Make(0, 0, 50), duration: 0.7)
+        let look = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.7)
+        
+        sceneView.pointOfView!.runAction(move)
+        sceneView.pointOfView!.runAction(look)
+        
+        sceneView.playing = true
+        
+    }
+    
+    func taped(sender: UITapGestureRecognizer) {
+        let location: CGPoint = sender.locationInView(self.sceneView)
+        let hits = self.sceneView.hitTest(location, options: nil)
+        if (hits.first?.node) != nil {
+            hits.first?.node.hidden = true
+        }
+    }
+    
+    // MARK: Transition
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        sceneView.stop(nil)
+        sceneView.play(nil)
     }
 
 
 }
-
