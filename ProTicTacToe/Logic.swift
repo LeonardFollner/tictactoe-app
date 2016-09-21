@@ -18,7 +18,7 @@ class Logic {
     var cubeData: [Int] = []
     var bigCube: Int = 0                                                        // tapped big cube
     var smallCube: Int = 0                                                      // tapped small cube
-    var nextCube: Int = 0
+    var nextCube: Int = 222
     var cubeOwner: Int = 0
     
     // player variables
@@ -33,6 +33,8 @@ class Logic {
     }
     
     func check(type: String, a: Int, b: Int) -> Bool {                          // checks for won lines
+        let a = bigCube*1000+a
+        let b = bigCube*1000+b
         switch type {
         case "cube":
             if (Data.get_instance().get_data_by_pos(a)[1] == Data.get_instance().get_data_by_pos(b)[1]) && (Data.get_instance().get_data_by_pos(b)[1] == player) {
@@ -197,7 +199,7 @@ class Logic {
             Data.get_instance().set_color_by_hash(hash, color:cubeOwner)
             
             if (Data.get_instance().get_groupdata(bigCube)[1] == 0) && won(smallCube, type: "cube") {
-                Data.get_instance().set_groupcolor(id, color:player)
+                Data.get_instance().set_groupcolor(bigCube, color:player)
                 if won(bigCube, type:"game") {
                     game_over()
                 }

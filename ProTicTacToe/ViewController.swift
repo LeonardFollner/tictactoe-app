@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     // main
     var mainNode: SCNNode = SCNNode()
-   // let logic = Logic()
+    let logic = Logic()
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -73,7 +73,6 @@ class ViewController: UIViewController {
     
     func doubletaped(sender: UITapGestureRecognizer) {
         
-        //sceneView.pointOfView!.camera?.xFov = 110.0
         
         let move = SCNAction.moveTo(SCNVector3Make(0, 0, 50), duration: 0.7)
         let look = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.7)
@@ -92,7 +91,7 @@ class ViewController: UIViewController {
         let location: CGPoint = sender.locationInView(self.sceneView)
         let hits = self.sceneView.hitTest(location, options: nil)
         if (hits.first?.node) != nil {
-            let newcolor : Int = 1//logic.turn(hits.first!.node.hash)
+            let newcolor : Int = logic.turn(hits.first!.node.hash)
             switch(newcolor){
             case 0:
                 hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.grayColor()
