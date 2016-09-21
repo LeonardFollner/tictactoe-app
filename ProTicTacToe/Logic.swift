@@ -12,7 +12,7 @@ class Logic {
 
     // game variables
     var turns: Int = 0
-    var first: Bool = true
+    var free: Bool = true
     
     // cube variables
     var id: Int = 0
@@ -29,8 +29,8 @@ class Logic {
         if (bigCube == nextCube) && (cubeOwner == 0) {
             return true
         }else{
-            if (first) {
-                first = false
+            if (free) {
+                free = false
                 return true
             }
             else {
@@ -61,7 +61,13 @@ class Logic {
         }
     }
     
-    func won(cube: Int, type: String) -> Bool {                                 // checks if eather game or a bigCube is won (type)
+    func full() {
+        if (Data.get_instance().get_groupdata(nextCube) == 27) {
+            free = true
+        }
+    }
+    
+    func won(cube: Int, type: String) -> Bool {                                 // checks if either game or a bigCube is won (type)
             switch cube {
             case 111:
                 return (check(type, a:112, b:113) || check(type, a:211, b:311) || check(type, a:121, b: 131) ||
@@ -192,7 +198,7 @@ class Logic {
     }
     
     
-    func turn(hash: Int) -> Int {                                                      // one turn
+    func turn(hash: Int) -> Int {                                               // one turn
         cubeData = Data.get_instance().get_data_by_hash(hash)
         id = cubeData[1]
         cubeOwner = cubeData[2]
@@ -202,6 +208,7 @@ class Logic {
         let cheat = false //MARK: Debug
         if (valid_cube()||cheat) {
             turns += 1
+            Data.get_instance().increase_groupnumber(bigCube)
             
             cubeOwner = player
             Data.get_instance().set_color_by_hash(hash, color:cubeOwner)

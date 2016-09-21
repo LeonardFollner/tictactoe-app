@@ -110,6 +110,14 @@ class Data {
         }
     }
     
+    func increase_groupnumber(pos: Int) {
+        for a in 0...groupdata_count-1 {
+            if (groupdata[a][0] == pos) {
+                groupdata[a][2] += 1
+            }
+        }
+    }
+    
 
     //MARK: add
     func add(hash: Int, pos: Int, color: Int){
