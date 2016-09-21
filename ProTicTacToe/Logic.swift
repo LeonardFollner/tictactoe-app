@@ -12,6 +12,7 @@ class Logic {
 
     // game variables
     var turns: Int = 0
+    var first: Bool = true
     
     // cube variables
     var id: Int = 0
@@ -22,13 +23,19 @@ class Logic {
     var cubeOwner: Int = 0
     
     // player variables
-    var player: Int = 0
+    var player: Int = Int(arc4random_uniform(2) + 1)
     
     func valid_cube() -> Bool {                                                 // checks if tap is valid
         if (bigCube == nextCube) && (cubeOwner == 0) {
             return true
         }else{
-            return false
+            if (first) {
+                first = false
+                return true
+            }
+            else {
+                return false
+            }
         }
     }
     
