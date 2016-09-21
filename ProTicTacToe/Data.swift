@@ -20,6 +20,23 @@ class Data {
     var cubedata_count : Int = 0
     var groupdata_count : Int = 0
     
+    func init_data(){
+        for gx in -1...1 {
+            for gy in -1...1 {
+                for gz in -1...1 {
+                    for x in -1...1 {
+                        for y in -1...1 {
+                            for z in -1...1 {
+                                let pos : Int = (gx+2)*100000+(gy+2)*10000+(gz+2)*1000+(x+2)*100+(y+2)*10+(z+2)
+                                Data.get_instance().add(0,pos: pos,color: 0)
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
     
     //MARK: cubedata
     func get_data_by_hash(hash: Int) -> [Int]{
@@ -56,6 +73,15 @@ class Data {
         }
     }
     
+    func set_hash_by_pos(pos: Int, hash: Int){
+        for a in 0...cubedata_count{
+            if (cubedata[a][1] == pos){
+                cubedata[a][0] = hash
+            }
+        }
+    }
+
+    
     //MARK: groupdata
     
     func get_groupdata(pos: Int) -> [Int]{
@@ -78,8 +104,8 @@ class Data {
 
     //MARK: add
     func add(hash: Int, pos: Int, color: Int){
-        groupdata[groupdata_count] = [hash,pos,color]
-        groupdata_count = groupdata_count+1
+        cubedata[cubedata_count] = [hash,pos,color]
+        cubedata_count = cubedata_count+1
     }
     
 }

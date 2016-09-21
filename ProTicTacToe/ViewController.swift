@@ -26,12 +26,14 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         
         sceneSetup()
-        mainNode = Cube.redraw_cube()
+        mainNode = Cube.draw_cube()
         sceneView.scene!.rootNode.addChildNode(mainNode)
     }
 
     // MARK: Scene
     func sceneSetup() {
+        
+        Data.get_instance().init_data()
         let scene = SCNScene()
         
         sceneView.allowsCameraControl = true
@@ -71,9 +73,15 @@ class ViewController: UIViewController {
     
     func doubletaped(sender: UITapGestureRecognizer) {
         
-        sceneView.pointOfView!.camera?.xFov = 110.0
+        //sceneView.pointOfView!.camera?.xFov = 110.0
+        
         let move = SCNAction.moveTo(SCNVector3Make(0, 0, 50), duration: 0.7)
         let look = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.7)
+        
+        let prev = sceneView.pointOfView!.camera!.xFov
+        sceneView.pointOfView!.runAction(.customActionWithDuration(0.3, actionBlock: { node, progress in
+            node.camera?.xFov = prev + (110-prev)/0.3*Double(progress)
+        }))
         
         sceneView.pointOfView!.runAction(move)
         sceneView.pointOfView!.runAction(look)
@@ -81,14 +89,28 @@ class ViewController: UIViewController {
         sceneView.playing = true
         
     }
-    
     func taped(sender: UITapGestureRecognizer) {
         let location: CGPoint = sender.locationInView(self.sceneView)
         let hits = self.sceneView.hitTest(location, options: nil)
         if (hits.first?.node) != nil {
-            hits.first?.node.hidden = true
-
             //TODO give data to logik
+            let newcolor = 1 //fedback from logic
+            switch(newcolor){
+            case 0:
+                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.grayColor()
+                break
+            case 1:
+                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.blueColor()
+                break
+            case 2:
+                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.redColor()
+                break
+            default:
+                break
+            }
+            // remove following
+            Data.get_instance().set_color_by_hash(hits.first!.node.hash,color: newcolor)
+           
         }
     }
     
