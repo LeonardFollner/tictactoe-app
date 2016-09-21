@@ -13,6 +13,7 @@ class Logic {
     // game variables
     var turns: Int = 0
     var free: Bool = true
+    var last: Bool = false
     
     // cube variables
     var id: Int = 0
@@ -26,10 +27,13 @@ class Logic {
     var player: Int = Int(arc4random_uniform(2) + 1)
     
     func valid_cube() -> Bool {                                                 // checks if tap is valid
+        if (last) {
+            return false
+        }
         if (bigCube == nextCube) && (cubeOwner == 0) {
             return true
         }else{
-            if (free) {
+            if (free) && (cubeOwner == 0) {
                 free = false
                 return true
             }
@@ -62,7 +66,7 @@ class Logic {
     }
     
     func full() {
-        if (Data.get_instance().get_groupdata(nextCube) == 27) {
+        if (Data.get_instance().get_groupdata(nextCube)[2] == 27) {
             free = true
         }
     }
@@ -193,7 +197,13 @@ class Logic {
             }
     }
     
-    func game_over() {
+    func game_won() {                                                           // for won games
+        last = true
+        NSLog("game won")
+    }
+    
+    func game_over() {                                                          // for games that lasted too long...
+        last = true
         NSLog("game over")
     }
     
@@ -217,6 +227,10 @@ class Logic {
                 Data.get_instance().set_groupcolor(bigCube, color:player)
                 NSLog("Cube won")
                 if won(bigCube, type:"game") {
+                    game_won()
+                }
+            }else {
+                if (turns == 243) {
                     game_over()
                 }
             }
