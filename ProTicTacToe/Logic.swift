@@ -35,13 +35,13 @@ class Logic {
     func check(type: String, a: Int, b: Int) -> Bool {                          // checks for won lines
         switch type {
         case "cube":
-            if (Data.get_data_by_pos(a)[1] == Data.get_data_by_pos(b)[1] == player) {
+            if (Data.get_instance().get_data_by_pos(a)[1] == Data.get_instance().get_data_by_pos(b)[1]) && (Data.get_instance().get_data_by_pos(b)[1] == player) {
                 return true
             }else{
                 return false
             }
         case "game":
-            if (Data.get_group_data(a)[1] == Data.get_group_data(b)[1] == player) {
+            if (Data.get_instance().get_groupdata(a)[1] == Data.get_instance().get_groupdata(b)[1]) && (Data.get_instance().get_groupdata(b)[1] == player) {
                 return true
             }else{
                 return false
@@ -182,8 +182,8 @@ class Logic {
     }
     
     
-    func turn(hash: Int) {                                                      // one turn
-        cubeData = Data.get_data_by_hash(hash)
+    func turn(hash: Int) -> Int {                                                      // one turn
+        cubeData = Data.get_instance().get_data_by_hash(hash)
         id = cubeData[1]
         cubeOwner = cubeData[2]
         
@@ -194,10 +194,10 @@ class Logic {
             turns += 1
             
             cubeOwner = player
-            Data.set_color_by_hash(hash, cubeOwner)
+            Data.get_instance().set_color_by_hash(hash, color:cubeOwner)
             
-            if (Data.get_group_data(bigCube)[1] == 0) && won(smallCube, type: "cube") {
-                Data.set_group_color(player)
+            if (Data.get_instance().get_groupdata(bigCube)[1] == 0) && won(smallCube, type: "cube") {
+                Data.get_instance().set_groupcolor(id, color:player)
                 if won(bigCube, type:"game") {
                     game_over()
                 }
@@ -211,6 +211,7 @@ class Logic {
             }
             nextCube = smallCube
         }
+        return cubeOwner
     }
     
 }
