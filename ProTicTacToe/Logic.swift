@@ -40,11 +40,12 @@ class Logic {
     }
     
     func check(type: String, a: Int, b: Int) -> Bool {                          // checks for won lines
-        let a = bigCube*1000+a
-        let b = bigCube*1000+b
+        
         switch type {
         case "cube":
-            if (Data.get_instance().get_data_by_pos(a)[1] == Data.get_instance().get_data_by_pos(b)[1]) && (Data.get_instance().get_data_by_pos(b)[1] == player) {
+            let a = bigCube*1000+a
+            let b = bigCube*1000+b
+            if (Data.get_instance().get_data_by_pos(a)[2] == Data.get_instance().get_data_by_pos(b)[2]) && (Data.get_instance().get_data_by_pos(b)[2] == player) {
                 return true
             }else{
                 return false
@@ -104,7 +105,7 @@ class Logic {
                 )
                 
             case 121:
-                return (check(type, a:111, b:131) || check(type, a:321, b:221) || check(type, a:122, b:123) ||
+                return (check(type, a:111, b:131) || check(type, a:321, b:223) || check(type, a:122, b:123) ||
                         check(type, a:222, b:323)
                 )
             case 221:
@@ -198,8 +199,8 @@ class Logic {
         
         bigCube = id / 1000
         smallCube = id % 1000
-        
-        if (valid_cube()) {
+        let cheat = false //MARK: Debug
+        if (valid_cube()||cheat) {
             turns += 1
             
             cubeOwner = player
@@ -207,6 +208,7 @@ class Logic {
             
             if (Data.get_instance().get_groupdata(bigCube)[1] == 0) && won(smallCube, type: "cube") {
                 Data.get_instance().set_groupcolor(bigCube, color:player)
+                NSLog("Cube won")
                 if won(bigCube, type:"game") {
                     game_over()
                 }

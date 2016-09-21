@@ -67,7 +67,7 @@ class Data {
     }
     
     func set_color_by_hash(hash: Int, color: Int){
-        for a in 0...cubedata_count{
+        for a in 0...cubedata_count-1{
             if (cubedata[a][0] == hash){
                 cubedata[a][2] = color
             }
@@ -75,7 +75,7 @@ class Data {
     }
     
     func set_color_by_pos(pos: Int, color: Int){
-        for a in 0...cubedata_count{
+        for a in 0...cubedata_count-1{
             if (cubedata[a][1] == pos){
                 cubedata[a][2] = color
             }
@@ -83,7 +83,7 @@ class Data {
     }
     
     func set_hash_by_pos(pos: Int, hash: Int){
-        for a in 0...cubedata_count{
+        for a in 0...cubedata_count-1{
             if (cubedata[a][1] == pos){
                 cubedata[a][0] = hash
             }
@@ -103,7 +103,7 @@ class Data {
     }
     
     func set_groupcolor(pos: Int, color: Int){
-        for a in 0...groupdata_count{
+        for a in 0...groupdata_count-1{
             if (groupdata[a][0] == pos){
                 groupdata[a][1] = color
             }
