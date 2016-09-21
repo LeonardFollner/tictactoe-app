@@ -15,7 +15,7 @@ class Data {
     }
     
     var cubedata: [[Int]] = Array(count: 730, repeatedValue: Array(count: 2, repeatedValue: 0))
-    var groupdata: [[Int]] = Array(count: 27, repeatedValue: Array(count: 1, repeatedValue: 0))
+    var groupdata: [[Int]] = Array(count: 27, repeatedValue: Array(count: 2, repeatedValue: 0))
 
     var cubedata_count : Int = 0
     var groupdata_count : Int = 0
@@ -33,6 +33,15 @@ class Data {
                         }
                     }
                     
+                }
+            }
+        }
+        for x in -1...1 {
+            for y in -1...1 {
+                for z in -1...1 {
+                    let pos : Int = (x+2)*100+(y+2)*10+(z+2)
+                    Data.get_instance().groupdata[groupdata_count][0] = pos
+                    groupdata_count = groupdata_count+1
                 }
             }
         }

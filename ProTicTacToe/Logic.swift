@@ -9,7 +9,7 @@
 import Foundation
 
 class Logic {
-    
+
     // game variables
     var turns: Int = 0
     
@@ -212,5 +212,5 @@ class Logic {
             nextCube = smallCube
         }
     }
-    
+
 }

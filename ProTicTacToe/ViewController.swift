@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     // main
     var mainNode: SCNNode = SCNNode()
-    
+   // let logic = Logic()
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -82,7 +82,6 @@ class ViewController: UIViewController {
         sceneView.pointOfView!.runAction(.customActionWithDuration(0.3, actionBlock: { node, progress in
             node.camera?.xFov = prev + (110-prev)/0.3*Double(progress)
         }))
-        
         sceneView.pointOfView!.runAction(move)
         sceneView.pointOfView!.runAction(look)
         
@@ -93,8 +92,7 @@ class ViewController: UIViewController {
         let location: CGPoint = sender.locationInView(self.sceneView)
         let hits = self.sceneView.hitTest(location, options: nil)
         if (hits.first?.node) != nil {
-            //TODO give data to logik
-            let newcolor = 1 //fedback from logic
+            let newcolor : Int = 1//logic.turn(hits.first!.node.hash)
             switch(newcolor){
             case 0:
                 hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.grayColor()
@@ -108,9 +106,6 @@ class ViewController: UIViewController {
             default:
                 break
             }
-            // remove following
-            Data.get_instance().set_color_by_hash(hits.first!.node.hash,color: newcolor)
-           
         }
     }
     
