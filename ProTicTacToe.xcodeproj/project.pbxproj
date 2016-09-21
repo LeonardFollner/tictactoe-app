@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D70FAED41D92898A00044291 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70FAED31D92898A00044291 /* Logic.swift */; };
 		FA0C8A771D928016000D4BE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C8A761D928016000D4BE7 /* AppDelegate.swift */; };
 		FA0C8A791D928016000D4BE7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C8A781D928016000D4BE7 /* ViewController.swift */; };
 		FA0C8A7C1D928016000D4BE7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0C8A7A1D928016000D4BE7 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D70FAED31D92898A00044291 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		FA0C8A731D928016000D4BE7 /* ProTicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProTicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA0C8A761D928016000D4BE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA0C8A781D928016000D4BE7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			children = (
 				FA0C8A761D928016000D4BE7 /* AppDelegate.swift */,
 				FA0C8A781D928016000D4BE7 /* ViewController.swift */,
+				D70FAED31D92898A00044291 /* Logic.swift */,
 				FA0C8A7A1D928016000D4BE7 /* Main.storyboard */,
 				FA0C8A7D1D928016000D4BE7 /* Assets.xcassets */,
 				FA0C8A7F1D928016000D4BE7 /* LaunchScreen.storyboard */,
@@ -198,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA0C8A791D928016000D4BE7 /* ViewController.swift in Sources */,
+				D70FAED41D92898A00044291 /* Logic.swift in Sources */,
 				FA0C8A771D928016000D4BE7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,6 +394,7 @@
 				FA0C8A921D928016000D4BE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FA0C8A931D928016000D4BE7 /* Build configuration list for PBXNativeTarget "ProTicTacToeTests" */ = {
 			isa = XCConfigurationList;
@@ -398,6 +403,7 @@
 				FA0C8A951D928016000D4BE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
