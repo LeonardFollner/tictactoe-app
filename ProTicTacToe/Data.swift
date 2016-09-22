@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Data {
+class Data{
     static let instance = Data()
     class func get_instance()-> Data{
         return instance
@@ -127,4 +127,20 @@ class Data {
         cubedata_count = cubedata_count+1
     }
     
+    //MARK: NSCoding
+    func save_game() {
+        let logic = Logic.get_instance()
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(groupdata, toFile: Save.ArchiveURL.path!)
+        let isSuccessfulSave2 = NSKeyedArchiver.archiveRootObject(cubedata, toFile: Save.ArchiveURL.path!)
+        let isSuccessfulSave3 = NSKeyedArchiver.archiveRootObject(logic.free, toFile: Save.ArchiveURL.path!)
+        let isSuccessfulSave4 = NSKeyedArchiver.archiveRootObject(logic.last, toFile: Save.ArchiveURL.path!)
+        let isSuccessfulSave5 = NSKeyedArchiver.archiveRootObject(logic.nextCube, toFile: Save.ArchiveURL.path!)
+        let isSuccessfulSave6 = NSKeyedArchiver.archiveRootObject(logic.turns, toFile: Save.ArchiveURL.path!)
+        if !isSuccessfulSave2 {
+            print("Failed to save game...")
+        }
+    }
+    func load_game(){
+        print(NSKeyedUnarchiver.unarchiveObjectWithFile(Save.ArchiveURL.path!) as? [[Int]])
+    }
 }

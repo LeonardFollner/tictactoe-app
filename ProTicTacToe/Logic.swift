@@ -9,6 +9,11 @@
 import Foundation
 
 class Logic {
+    static let instance = Logic()
+    class func get_instance()-> Logic{
+        return instance
+    }
+    
     //MARK: Debug
     var cheat = false
     

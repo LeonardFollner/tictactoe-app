@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     // main
     var mainNode: SCNNode = SCNNode()
-    let logic = Logic()
+    let logic = Logic.get_instance()
     
     // MARK: Lifecycle
     override func viewDidLoad() {
