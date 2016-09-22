@@ -19,14 +19,22 @@ class ViewController: UIViewController {
     var sideNode: SCNNode = SCNNode()
     let logic = Logic.get_instance()
     
+    //MARK: ButtonActions
+    @IBAction func reset(sender: UIButton) {
+        Data.get_instance().init_data()
+        let newimage = Cube.draw_sidecube()
+        sideView.scene!.rootNode.replaceChildNode(sideNode, with: newimage)
+        sideNode = newimage
+        let newscene = Cube.draw_cube()
+        sceneView.scene!.rootNode.replaceChildNode(mainNode, with: newscene)
+        mainNode = newscene
+    }
+    
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
+        Data.get_instance().load_game()
+        //Data.get_instance().init_data()
         sceneSetup()
         sideSetup()
         mainNode = Cube.draw_cube()
@@ -38,8 +46,10 @@ class ViewController: UIViewController {
             self.syncronizeViews()
         })))
         sideView.playing = true
-        
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     func sideSetup() {
@@ -75,8 +85,6 @@ class ViewController: UIViewController {
     
     // MARK: Scene
     func sceneSetup() {
-        
-        Data.get_instance().init_data()
         let scene = SCNScene()
         
         sceneView.allowsCameraControl = true
@@ -130,7 +138,7 @@ class ViewController: UIViewController {
         sceneView.pointOfView!.runAction(move)
         sceneView.pointOfView!.runAction(look)
         
-        sceneView.playing = true
+        playing()
         
         
     }
@@ -169,6 +177,14 @@ class ViewController: UIViewController {
             sideView.scene!.rootNode.replaceChildNode(sideNode, with: newimage)
             sideNode = newimage
         }
+    }
+    func playing(){
+        sceneView.playing = true
+        sideView.playing = true
+    }
+    func pause(){
+        sceneView.playing = false
+        sideView.playing = false
     }
     
     func syncronizeViews(){

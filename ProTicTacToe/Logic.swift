@@ -27,7 +27,7 @@ class Logic {
     var cubeData: [Int] = []
     var bigCube: Int = 0                                                        // tapped big cube
     var smallCube: Int = 0                                                      // tapped small cube
-    var nextCube: Int = 222
+    var nextCube: Int = 0
     var cubeOwner: Int = 0
     
     // player variables
