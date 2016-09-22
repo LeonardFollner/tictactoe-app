@@ -21,6 +21,8 @@ class Data{
     var groupdata_count : Int = 0
     
     func init_data(){
+        cubedata_count = 0
+        groupdata_count = 0
         for gx in -1...1 {
             for gy in -1...1 {
                 for gz in -1...1 {
@@ -40,11 +42,16 @@ class Data{
             for y in -1...1 {
                 for z in -1...1 {
                     let pos : Int = (x+2)*100+(y+2)*10+(z+2)
-                    Data.get_instance().groupdata[groupdata_count][0] = pos
+                    Data.get_instance().groupdata[groupdata_count] = [pos,0,0]
                     groupdata_count = groupdata_count+1
                 }
             }
         }
+        let logic = Logic.get_instance()
+        logic.free = true
+        logic.last = false
+        logic.nextCube = 0
+        logic.turns = 0
     }
     
     //MARK: cubedata
@@ -138,6 +145,16 @@ class Data{
         NSKeyedArchiver.archiveRootObject(logic.turns, toFile: Save.turns_path.path!)
     }
     func load_game(){
-        print(NSKeyedUnarchiver.unarchiveObjectWithFile(Save.groupdata_path.path!) as? [[Int]])
+        cubedata = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.cubedata_path.path!) as? [[Int]])!
+        groupdata = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.groupdata_path.path!) as? [[Int]])!
+        groupdata_count = 27
+        cubedata_count = 730
+        
+        let logic = Logic.get_instance()
+        logic.free = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.free_path.path!) as? Bool)!
+        logic.last = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.last_path.path!) as? Bool)!
+        logic.nextCube = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.next_path.path!) as? Int)!
+        logic.turns = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.turns_path.path!) as? Int)!
+        
     }
 }
