@@ -40,11 +40,12 @@
                     </view>
                     <connections>
                         <outlet property="sceneView" destination="BBI-do-vC0" id="JhV-ea-bXS"/>
+                        <outlet property="sideView" destination="cix-uv-LRv" id="Trd-na-b7m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="265" y="287"/>
+            <point key="canvasLocation" x="245" y="211"/>
         </scene>
     </scenes>
 </document>

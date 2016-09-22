@@ -12,9 +12,11 @@ import SceneKit
 class ViewController: UIViewController {
     // UI
     @IBOutlet weak var sceneView: SCNView!
+    @IBOutlet weak var sideView: SCNView!
     
     // main
     var mainNode: SCNNode = SCNNode()
+    var sideNode: SCNNode = SCNNode()
     let logic = Logic()
     
     // MARK: Lifecycle
@@ -26,10 +28,51 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         
         sceneSetup()
+        sideSetup()
         mainNode = Cube.draw_cube()
         sceneView.scene!.rootNode.addChildNode(mainNode)
+        sideNode = Cube.draw_sidecube()
+        sideView.scene!.rootNode.addChildNode(sideNode)
+        
+        sideView.pointOfView!.runAction(.repeatActionForever(.customActionWithDuration(10, actionBlock: { node, progress in
+            self.syncronizeViews()
+        })))
+        sideView.playing = true
+        
+        
     }
 
+    func sideSetup() {
+        let side = SCNScene()
+        
+        let ambientLightNode = SCNNode()
+        ambientLightNode.light = SCNLight()
+        ambientLightNode.light!.type = SCNLightTypeAmbient
+        ambientLightNode.light!.color = UIColor(white: 0.67, alpha: 1.0)
+        side.rootNode.addChildNode(ambientLightNode)
+        
+        let omniLightNode = SCNNode()
+        omniLightNode.light = SCNLight()
+        omniLightNode.light!.type = SCNLightTypeOmni
+        omniLightNode.light!.color = UIColor(white: 0.75, alpha: 1.0)
+        omniLightNode.position = SCNVector3Make(0, 50, 50)
+        side.rootNode.addChildNode(omniLightNode)
+        
+        let cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        cameraNode.position = SCNVector3Make(0, 0, 50)
+        cameraNode.camera?.xFov=110.0
+        
+        side.rootNode.camera = cameraNode.camera
+        side.rootNode.addChildNode(cameraNode)
+        
+        side.rootNode.camera?.automaticallyAdjustsZRange = true
+        
+        sideView.scene = side
+        sideView.allowsCameraControl = false
+
+    }
+    
     // MARK: Scene
     func sceneSetup() {
         
@@ -67,7 +110,6 @@ class ViewController: UIViewController {
         cheat.numberOfTouchesRequired=2
         doubletap.numberOfTapsRequired = 2
         singletap.requireGestureRecognizerToFail(doubletap)
-
         
         sceneView.addGestureRecognizer(singletap)
         sceneView.addGestureRecognizer(doubletap)
@@ -89,6 +131,8 @@ class ViewController: UIViewController {
         sceneView.pointOfView!.runAction(look)
         
         sceneView.playing = true
+        
+        
     }
     
     
@@ -121,7 +165,16 @@ class ViewController: UIViewController {
             default:
                 break
             }
+            let newimage = Cube.draw_sidecube()
+            sideView.scene!.rootNode.replaceChildNode(sideNode, with: newimage)
+            sideNode = newimage
         }
+    }
+    
+    func syncronizeViews(){
+        sideView.pointOfView!.position = sceneView.pointOfView!.position
+        sideView.pointOfView!.orientation = sceneView.pointOfView!.orientation
+        sideView.pointOfView!.camera!.xFov = sceneView.pointOfView!.camera!.xFov
     }
     
     // MARK: Transition
