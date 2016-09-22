@@ -13,7 +13,6 @@ import UIKit
 class MenuViewController: UIViewController {
     
     @IBAction func scanButton (sender: UIButton!) {
-        
         performSegueWithIdentifier("3d", sender: self)
         
     }

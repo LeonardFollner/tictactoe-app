@@ -29,6 +29,7 @@ class Logic {
     var smallCube: Int = 0                                                      // tapped small cube
     var nextCube: Int = 0
     var cubeOwner: Int = 0
+    var lastCube: Int = 0
     
     // player variables
     var player: Int = Int(arc4random_uniform(2) + 1)
@@ -247,6 +248,7 @@ class Logic {
             else {
                 player = 1
             }
+            lastCube = id
             nextCube = smallCube
             full()
         }

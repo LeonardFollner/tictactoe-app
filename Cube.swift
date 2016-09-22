@@ -90,7 +90,7 @@ class Cube {
                     default:
                         break
                 }
-                if(pos == Logic.get_instance().nextCube){
+                if(pos == Logic.get_instance().nextCube && Logic.get_instance().free == false){
                     box.firstMaterial!.emission.contents = UIColor.darkGrayColor()
                 }
                 box.firstMaterial!.specular.contents = UIColor.whiteColor()
