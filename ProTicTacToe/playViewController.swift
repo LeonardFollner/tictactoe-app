@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class playViewController: UIViewController {
+
     @IBAction func button(sender: UIButton) {
             performSegueWithIdentifier("pttt3d", sender: self)
     }
