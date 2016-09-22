@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  pttt3dViewController.swift
 //  ProTicTacToe
 //
 //  Created by Alex Jenke on 21.09.16.
@@ -9,7 +9,7 @@
 import UIKit
 import SceneKit
 
-class ViewController: UIViewController {
+class pttt3dViewController: UIViewController {
     // UI
     @IBOutlet weak var sceneView: SCNView!
     @IBOutlet weak var sideView: SCNView!
@@ -111,9 +111,9 @@ class ViewController: UIViewController {
         scene.rootNode.addChildNode(cameraNode)
         scene.rootNode.camera?.automaticallyAdjustsZRange = true
         
-        let singletap = UITapGestureRecognizer(target: self, action: #selector(ViewController.taped(_:)))
-        let doubletap = UITapGestureRecognizer(target: self, action: #selector(ViewController.doubletaped(_:)))
-        let cheat = UITapGestureRecognizer(target: self, action: #selector(ViewController.cheat(_:)))
+        let singletap = UITapGestureRecognizer(target: self, action: #selector(pttt3dViewController.taped(_:)))
+        let doubletap = UITapGestureRecognizer(target: self, action: #selector(pttt3dViewController.doubletaped(_:)))
+        let cheat = UITapGestureRecognizer(target: self, action: #selector(pttt3dViewController.cheat(_:)))
         cheat.numberOfTapsRequired=2
         cheat.numberOfTouchesRequired=2
         doubletap.numberOfTapsRequired = 2
