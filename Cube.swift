@@ -91,7 +91,7 @@ class Cube {
                         break
                 }
                 if(pos == Logic.get_instance().nextCube){
-                // hervorheben
+                    box.firstMaterial!.emission.contents = UIColor.darkGrayColor()
                 }
                 box.firstMaterial!.specular.contents = UIColor.whiteColor()
                 box.firstMaterial!.transparency = 0.8
