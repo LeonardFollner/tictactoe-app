@@ -61,6 +61,47 @@ class Cube {
         
         return cube
     }
-
+    
+    
+    class func draw_sidecube() -> SCNNode {
+    let cube = SCNNode()
+    for x in -1...1 {
+        for y in -1...1 {
+            for z in -1...1 {
+                let xf = Float(x*22)
+                let yf = Float(y*22)
+                let zf = Float(z*22)
+                
+                let pos : Int = (x+2)*100+(y+2)*10+(z+2)
+                let data = Data.get_instance().get_groupdata(pos)
+                //create Cube
+                let color = data[1]
+                let box = SCNBox(width: 10,height:  10,length:  10,chamferRadius:  1)
+                switch(color){
+                    case 0:
+                        box.firstMaterial!.diffuse.contents = UIColor.grayColor()
+                        break
+                    case 1:
+                        box.firstMaterial!.diffuse.contents = UIColor.blueColor()
+                        break
+                    case 2:
+                            box.firstMaterial!.diffuse.contents = UIColor.redColor()
+                        break
+                    default:
+                        break
+                }
+                if(pos == Logic.get_instance().nextCube){
+                // hervorheben
+                }
+                box.firstMaterial!.specular.contents = UIColor.whiteColor()
+                box.firstMaterial!.transparency = 0.8
+                //add to scene
+                let Node = SCNNode(geometry: box)
+                Node.position = SCNVector3Make(xf,yf,zf)
+                cube.addChildNode(Node)
+            }
+        }
+    }
+    return cube
+    }
 }
-
