@@ -71,5 +71,11 @@ class Save : NSObject, NSCoding{
     
     // MARK: Archiving Paths
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("protictactoe")
+    static let path_pttt3d = DocumentsDirectory.URLByAppendingPathComponent("protictactoe3d", isDirectory: true)
+    static let groupdata_path = path_pttt3d.URLByAppendingPathComponent("groupdata")
+    static let cubedata_path = path_pttt3d.URLByAppendingPathComponent("cubedata")
+    static let free_path = path_pttt3d.URLByAppendingPathComponent("free")
+    static let last_path = path_pttt3d.URLByAppendingPathComponent("last")
+    static let next_path = path_pttt3d.URLByAppendingPathComponent("nextCube")
+    static let turns_path = path_pttt3d.URLByAppendingPathComponent("turns")
 }

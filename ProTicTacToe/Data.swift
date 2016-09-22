@@ -130,17 +130,14 @@ class Data{
     //MARK: NSCoding
     func save_game() {
         let logic = Logic.get_instance()
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(groupdata, toFile: Save.ArchiveURL.path!)
-        let isSuccessfulSave2 = NSKeyedArchiver.archiveRootObject(cubedata, toFile: Save.ArchiveURL.path!)
-        let isSuccessfulSave3 = NSKeyedArchiver.archiveRootObject(logic.free, toFile: Save.ArchiveURL.path!)
-        let isSuccessfulSave4 = NSKeyedArchiver.archiveRootObject(logic.last, toFile: Save.ArchiveURL.path!)
-        let isSuccessfulSave5 = NSKeyedArchiver.archiveRootObject(logic.nextCube, toFile: Save.ArchiveURL.path!)
-        let isSuccessfulSave6 = NSKeyedArchiver.archiveRootObject(logic.turns, toFile: Save.ArchiveURL.path!)
-        if !isSuccessfulSave2 {
-            print("Failed to save game...")
-        }
+        NSKeyedArchiver.archiveRootObject(groupdata, toFile: Save.groupdata_path.path!)
+        NSKeyedArchiver.archiveRootObject(cubedata, toFile: Save.cubedata_path.path!)
+        NSKeyedArchiver.archiveRootObject(logic.free, toFile: Save.free_path.path!)
+        NSKeyedArchiver.archiveRootObject(logic.last, toFile: Save.last_path.path!)
+        NSKeyedArchiver.archiveRootObject(logic.nextCube, toFile: Save.next_path.path!)
+        NSKeyedArchiver.archiveRootObject(logic.turns, toFile: Save.turns_path.path!)
     }
     func load_game(){
-        print(NSKeyedUnarchiver.unarchiveObjectWithFile(Save.ArchiveURL.path!) as? [[Int]])
+        print(NSKeyedUnarchiver.unarchiveObjectWithFile(Save.groupdata_path.path!) as? [[Int]])
     }
 }
