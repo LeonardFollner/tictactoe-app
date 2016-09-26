@@ -32,18 +32,18 @@ class Cube {
                                 let box = SCNBox(width: 2,height:  2,length:  2,chamferRadius:  0.2)
                                 switch(color){
                                 case 0:
-                                    box.firstMaterial!.diffuse.contents = UIColor.grayColor()
+                                    box.firstMaterial!.diffuse.contents = UIColor.gray
                                     break
                                 case 1:
-                                    box.firstMaterial!.diffuse.contents = UIColor.blueColor()
+                                    box.firstMaterial!.diffuse.contents = UIColor.blue
                                     break
                                 case 2:
-                                    box.firstMaterial!.diffuse.contents = UIColor.redColor()
+                                    box.firstMaterial!.diffuse.contents = UIColor.red
                                     break
                                 default:
                                     break
                                 }
-                                box.firstMaterial!.specular.contents = UIColor.whiteColor()
+                                box.firstMaterial!.specular.contents = UIColor.white
                                 box.firstMaterial!.transparency = 0.8
                                 //add to scene
                                 let Node = SCNNode(geometry: box)
@@ -79,21 +79,21 @@ class Cube {
                 let box = SCNBox(width: 10,height:  10,length:  10,chamferRadius:  1)
                 switch(color){
                     case 0:
-                        box.firstMaterial!.diffuse.contents = UIColor.grayColor()
+                        box.firstMaterial!.diffuse.contents = UIColor.gray
                         break
                     case 1:
-                        box.firstMaterial!.diffuse.contents = UIColor.blueColor()
+                        box.firstMaterial!.diffuse.contents = UIColor.blue
                         break
                     case 2:
-                            box.firstMaterial!.diffuse.contents = UIColor.redColor()
+                            box.firstMaterial!.diffuse.contents = UIColor.red
                         break
                     default:
                         break
                 }
                 if(pos == Logic.get_instance().nextCube && Logic.get_instance().free == false){
-                    box.firstMaterial!.emission.contents = UIColor.darkGrayColor()
+                    box.firstMaterial!.emission.contents = UIColor.darkGray
                 }
-                box.firstMaterial!.specular.contents = UIColor.whiteColor()
+                box.firstMaterial!.specular.contents = UIColor.white
                 box.firstMaterial!.transparency = 0.8
                 //add to scene
                 let Node = SCNNode(geometry: box)

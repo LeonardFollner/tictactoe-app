@@ -12,8 +12,8 @@ import UIKit
 
 class MenuViewController: UIViewController {
     
-    @IBAction func scanButton (sender: UIButton!) {
-        performSegueWithIdentifier("play", sender: self)
+    @IBAction func scanButton (_ sender: UIButton!) {
+        performSegue(withIdentifier: "play", sender: self)
         
     }
 }

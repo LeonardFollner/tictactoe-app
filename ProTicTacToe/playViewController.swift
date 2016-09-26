@@ -11,7 +11,7 @@ import UIKit
 
 class playViewController: UIViewController {
 
-    @IBAction func button(sender: UIButton) {
-            performSegueWithIdentifier("pttt3d", sender: self)
+    @IBAction func button(_ sender: UIButton) {
+            performSegue(withIdentifier: "pttt3d", sender: self)
     }
 }

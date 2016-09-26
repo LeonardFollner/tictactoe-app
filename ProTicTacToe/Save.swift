@@ -46,36 +46,36 @@ class Save : NSObject, NSCoding{
         static let turnsName = "turns"
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(groupdata, forKey: PropertyKey.groupName)
-        aCoder.encodeObject(cubedata, forKey: PropertyKey.cubeName)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(groupdata, forKey: PropertyKey.groupName)
+        aCoder.encode(cubedata, forKey: PropertyKey.cubeName)
         
-        aCoder.encodeBool(free, forKey: PropertyKey.freeName)
-        aCoder.encodeBool(last, forKey: PropertyKey.lastName)
-        aCoder.encodeInteger(nextCube, forKey: PropertyKey.nextName)
-        aCoder.encodeInteger(turns, forKey: PropertyKey.turnsName)
+        aCoder.encode(free, forKey: PropertyKey.freeName)
+        aCoder.encode(last, forKey: PropertyKey.lastName)
+        aCoder.encode(nextCube, forKey: PropertyKey.nextName)
+        aCoder.encode(turns, forKey: PropertyKey.turnsName)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let groupdata = aDecoder.decodeObjectForKey(PropertyKey.groupName) as! [[Int]]
-        let cubedata = aDecoder.decodeObjectForKey(PropertyKey.cubeName) as! [[Int]]
+        let groupdata = aDecoder.decodeObject(forKey: PropertyKey.groupName) as! [[Int]]
+        let cubedata = aDecoder.decodeObject(forKey: PropertyKey.cubeName) as! [[Int]]
         
-        let free = aDecoder.decodeBoolForKey(PropertyKey.freeName)
-        let last = aDecoder.decodeBoolForKey(PropertyKey.lastName)
-        let nextCube = aDecoder.decodeIntForKey(PropertyKey.nextName) as! Int
-        let turns = aDecoder.decodeIntForKey(PropertyKey.turnsName) as! Int
+        let free = aDecoder.decodeBool(forKey: PropertyKey.freeName)
+        let last = aDecoder.decodeBool(forKey: PropertyKey.lastName)
+        let nextCube = aDecoder.decodeCInt(forKey: PropertyKey.nextName) as! Int
+        let turns = aDecoder.decodeCInt(forKey: PropertyKey.turnsName) as! Int
         
         self.init(groupdata: groupdata, cubedata: cubedata, free: free, last: last, nextCube: nextCube, turns: turns)
     }
 
     // MARK: Archiving Paths
-    static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-    static let path_pttt3d = DocumentsDirectory.URLByAppendingPathComponent("protictactoe3d", isDirectory: true)
+    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let path_pttt3d = DocumentsDirectory.appendingPathComponent("protictactoe3d", isDirectory: true)
     
-    static let groupdata_path = path_pttt3d.URLByAppendingPathExtension("groupdata")
-    static let cubedata_path = path_pttt3d.URLByAppendingPathExtension("cubedata")
-    static let free_path = path_pttt3d.URLByAppendingPathExtension("free")
-    static let last_path = path_pttt3d.URLByAppendingPathExtension("last")
-    static let next_path = path_pttt3d.URLByAppendingPathExtension("nextCube")
-    static let turns_path = path_pttt3d.URLByAppendingPathExtension("turns")
+    static let groupdata_path = path_pttt3d.appendingPathExtension("groupdata")
+    static let cubedata_path = path_pttt3d.appendingPathExtension("cubedata")
+    static let free_path = path_pttt3d.appendingPathExtension("free")
+    static let last_path = path_pttt3d.appendingPathExtension("last")
+    static let next_path = path_pttt3d.appendingPathExtension("nextCube")
+    static let turns_path = path_pttt3d.appendingPathExtension("turns")
 }

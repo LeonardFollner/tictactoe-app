@@ -14,8 +14,8 @@ class Data{
         return instance
     }
     
-    var cubedata: [[Int]] = Array(count: 730, repeatedValue: Array(count: 3, repeatedValue: 0))
-    var groupdata: [[Int]] = Array(count: 27, repeatedValue: Array(count: 3, repeatedValue: 0))
+    var cubedata: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 730)
+    var groupdata: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 27)
 
     var cubedata_count : Int = 0
     var groupdata_count : Int = 0
@@ -55,7 +55,7 @@ class Data{
     }
     
     //MARK: cubedata
-    func get_data_by_hash(hash: Int) -> [Int]{
+    func get_data_by_hash(_ hash: Int) -> [Int]{
         for a in cubedata{
             if (a[0] == hash){
                 return a
@@ -64,7 +64,7 @@ class Data{
         return [-1]
     }
     
-    func get_data_by_pos(pos: Int) -> [Int]{
+    func get_data_by_pos(_ pos: Int) -> [Int]{
         for a in cubedata{
             if (a[1] == pos){
                 return a
@@ -73,7 +73,7 @@ class Data{
         return [-1]
     }
     
-    func set_color_by_hash(hash: Int, color: Int){
+    func set_color_by_hash(_ hash: Int, color: Int){
         for a in 0...cubedata_count-1{
             if (cubedata[a][0] == hash){
                 cubedata[a][2] = color
@@ -81,7 +81,7 @@ class Data{
         }
     }
     
-    func set_color_by_pos(pos: Int, color: Int){
+    func set_color_by_pos(_ pos: Int, color: Int){
         for a in 0...cubedata_count-1{
             if (cubedata[a][1] == pos){
                 cubedata[a][2] = color
@@ -89,7 +89,7 @@ class Data{
         }
     }
     
-    func set_hash_by_pos(pos: Int, hash: Int){
+    func set_hash_by_pos(_ pos: Int, hash: Int){
         for a in 0...cubedata_count-1{
             if (cubedata[a][1] == pos){
                 cubedata[a][0] = hash
@@ -100,7 +100,7 @@ class Data{
     
     //MARK: groupdata
     
-    func get_groupdata(pos: Int) -> [Int]{
+    func get_groupdata(_ pos: Int) -> [Int]{
         for a in groupdata{
             if (a[0] == pos){
                 return a
@@ -109,7 +109,7 @@ class Data{
         return [-1]
     }
     
-    func set_groupcolor(pos: Int, color: Int){
+    func set_groupcolor(_ pos: Int, color: Int){
         for a in 0...groupdata_count-1{
             if (groupdata[a][0] == pos){
                 groupdata[a][1] = color
@@ -117,7 +117,7 @@ class Data{
         }
     }
     
-    func increase_groupnumber(pos: Int) {
+    func increase_groupnumber(_ pos: Int) {
         for a in 0...groupdata_count-1 {
             if (groupdata[a][0] == pos) {
                 var count = groupdata[a][2]
@@ -129,7 +129,7 @@ class Data{
     
 
     //MARK: add
-    func add(hash: Int, pos: Int, color: Int){
+    func add(_ hash: Int, pos: Int, color: Int){
         cubedata[cubedata_count] = [hash,pos,color]
         cubedata_count = cubedata_count+1
     }
@@ -137,24 +137,24 @@ class Data{
     //MARK: NSCoding
     func save_game() {
         let logic = Logic.get_instance()
-        NSKeyedArchiver.archiveRootObject(groupdata, toFile: Save.groupdata_path.path!)
-        NSKeyedArchiver.archiveRootObject(cubedata, toFile: Save.cubedata_path.path!)
-        NSKeyedArchiver.archiveRootObject(logic.free, toFile: Save.free_path.path!)
-        NSKeyedArchiver.archiveRootObject(logic.last, toFile: Save.last_path.path!)
-        NSKeyedArchiver.archiveRootObject(logic.nextCube, toFile: Save.next_path.path!)
-        NSKeyedArchiver.archiveRootObject(logic.turns, toFile: Save.turns_path.path!)
+        NSKeyedArchiver.archiveRootObject(groupdata, toFile: Save.groupdata_path.path)
+        NSKeyedArchiver.archiveRootObject(cubedata, toFile: Save.cubedata_path.path)
+        NSKeyedArchiver.archiveRootObject(logic.free, toFile: Save.free_path.path)
+        NSKeyedArchiver.archiveRootObject(logic.last, toFile: Save.last_path.path)
+        NSKeyedArchiver.archiveRootObject(logic.nextCube, toFile: Save.next_path.path)
+        NSKeyedArchiver.archiveRootObject(logic.turns, toFile: Save.turns_path.path)
     }
     func load_game(){
-        cubedata = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.cubedata_path.path!) as? [[Int]])!
-        groupdata = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.groupdata_path.path!) as? [[Int]])!
+        cubedata = (NSKeyedUnarchiver.unarchiveObject(withFile: Save.cubedata_path.path) as? [[Int]])!
+        groupdata = (NSKeyedUnarchiver.unarchiveObject(withFile: Save.groupdata_path.path) as? [[Int]])!
         groupdata_count = 27
         cubedata_count = 730
         
         let logic = Logic.get_instance()
-        logic.free = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.free_path.path!) as? Bool)!
-        logic.last = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.last_path.path!) as? Bool)!
-        logic.nextCube = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.next_path.path!) as? Int)!
-        logic.turns = (NSKeyedUnarchiver.unarchiveObjectWithFile(Save.turns_path.path!) as? Int)!
+        logic.free = (NSKeyedUnarchiver.unarchiveObject(withFile: Save.free_path.path) as? Bool)!
+        logic.last = (NSKeyedUnarchiver.unarchiveObject(withFile: Save.last_path.path) as? Bool)!
+        logic.nextCube = (NSKeyedUnarchiver.unarchiveObject(withFile: Save.next_path.path) as? Int)!
+        logic.turns = (NSKeyedUnarchiver.unarchiveObject(withFile: Save.turns_path.path) as? Int)!
         
     }
 }

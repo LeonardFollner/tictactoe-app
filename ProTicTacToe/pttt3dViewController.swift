@@ -20,7 +20,7 @@ class pttt3dViewController: UIViewController {
     let logic = Logic.get_instance()
     
     //MARK: ButtonActions
-    @IBAction func reset(sender: UIButton) {
+    @IBAction func reset(_ sender: UIButton) {
         Data.get_instance().init_data()
         let newimage = Cube.draw_sidecube()
         sideView.scene!.rootNode.replaceChildNode(sideNode, with: newimage)
@@ -33,8 +33,8 @@ class pttt3dViewController: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        Data.get_instance().load_game()
-        //Data.get_instance().init_data()
+        //Data.get_instance().load_game()  // TODO
+        Data.get_instance().init_data()    // TODO
         sceneSetup()
         sideSetup()
         mainNode = Cube.draw_cube()
@@ -42,13 +42,13 @@ class pttt3dViewController: UIViewController {
         sideNode = Cube.draw_sidecube()
         sideView.scene!.rootNode.addChildNode(sideNode)
         
-        sideView.pointOfView!.runAction(.repeatActionForever(.customActionWithDuration(10, actionBlock: { node, progress in
+        sideView.pointOfView!.runAction(.repeatForever(.customAction(duration: 10, action: { node, progress in
             self.syncronizeViews()
         })))
-        sideView.playing = true
+        sideView.isPlaying = true
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
 
@@ -57,13 +57,13 @@ class pttt3dViewController: UIViewController {
         
         let ambientLightNode = SCNNode()
         ambientLightNode.light = SCNLight()
-        ambientLightNode.light!.type = SCNLightTypeAmbient
+        ambientLightNode.light!.type = SCNLight.LightType.ambient
         ambientLightNode.light!.color = UIColor(white: 0.67, alpha: 1.0)
         side.rootNode.addChildNode(ambientLightNode)
         
         let omniLightNode = SCNNode()
         omniLightNode.light = SCNLight()
-        omniLightNode.light!.type = SCNLightTypeOmni
+        omniLightNode.light!.type = SCNLight.LightType.omni
         omniLightNode.light!.color = UIColor(white: 0.75, alpha: 1.0)
         omniLightNode.position = SCNVector3Make(0, 50, 50)
         side.rootNode.addChildNode(omniLightNode)
@@ -91,13 +91,13 @@ class pttt3dViewController: UIViewController {
         
         let ambientLightNode = SCNNode()
         ambientLightNode.light = SCNLight()
-        ambientLightNode.light!.type = SCNLightTypeAmbient
+        ambientLightNode.light!.type = SCNLight.LightType.ambient
         ambientLightNode.light!.color = UIColor(white: 0.67, alpha: 1.0)
         scene.rootNode.addChildNode(ambientLightNode)
         
         let omniLightNode = SCNNode()
         omniLightNode.light = SCNLight()
-        omniLightNode.light!.type = SCNLightTypeOmni
+        omniLightNode.light!.type = SCNLight.LightType.omni
         omniLightNode.light!.color = UIColor(white: 0.75, alpha: 1.0)
         omniLightNode.position = SCNVector3Make(0, 50, 50)
         scene.rootNode.addChildNode(omniLightNode)
@@ -117,7 +117,7 @@ class pttt3dViewController: UIViewController {
         cheat.numberOfTapsRequired=2
         cheat.numberOfTouchesRequired=2
         doubletap.numberOfTapsRequired = 2
-        singletap.requireGestureRecognizerToFail(doubletap)
+        singletap.require(toFail: doubletap)
         
         sceneView.addGestureRecognizer(singletap)
         sceneView.addGestureRecognizer(doubletap)
@@ -126,13 +126,13 @@ class pttt3dViewController: UIViewController {
         
     }
     
-    func doubletaped(sender: UITapGestureRecognizer) {
+    func doubletaped(_ sender: UITapGestureRecognizer) {
         
-        let move = SCNAction.moveTo(SCNVector3Make(0, 0, 50), duration: 0.7)
-        let look = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.7)
+        let move = SCNAction.move(to: SCNVector3Make(0, 0, 50), duration: 0.7)
+        let look = SCNAction.rotateTo(x: 0, y: 0, z: 0, duration: 0.7)
         
         let prev = sceneView.pointOfView!.camera!.xFov
-        sceneView.pointOfView!.runAction(.customActionWithDuration(0.3, actionBlock: { node, progress in
+        sceneView.pointOfView!.runAction(.customAction(duration: 0.3, action: { node, progress in
             node.camera?.xFov = prev + (110-prev)/0.3*Double(progress)
         }))
         sceneView.pointOfView!.runAction(move)
@@ -144,7 +144,7 @@ class pttt3dViewController: UIViewController {
     }
     
     
-    func cheat(sender: UITapGestureRecognizer){
+    func cheat(_ sender: UITapGestureRecognizer){
         if(logic.cheat){
             logic.cheat = false
             NSLog("cheat off")
@@ -155,20 +155,20 @@ class pttt3dViewController: UIViewController {
         doubletaped(sender)
     }
     
-    func taped(sender: UITapGestureRecognizer) {
-        let location: CGPoint = sender.locationInView(self.sceneView)
+    func taped(_ sender: UITapGestureRecognizer) {
+        let location: CGPoint = sender.location(in: self.sceneView)
         let hits = self.sceneView.hitTest(location, options: nil)
         if (hits.first?.node) != nil {
             let newcolor : Int = logic.turn(hits.first!.node.hash)
             switch(newcolor){
             case 0:
-                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.grayColor()
+                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.gray
                 break
             case 1:
-                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.blueColor()
+                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
                 break
             case 2:
-                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.redColor()
+                hits.first!.node.geometry?.firstMaterial?.diffuse.contents = UIColor.red
                 break
             default:
                 break
@@ -179,12 +179,12 @@ class pttt3dViewController: UIViewController {
         }
     }
     func playing(){
-        sceneView.playing = true
-        sideView.playing = true
+        sceneView.isPlaying = true
+        sideView.isPlaying = true
     }
     func pause(){
-        sceneView.playing = false
-        sideView.playing = false
+        sceneView.isPlaying = false
+        sideView.isPlaying = false
     }
     
     func syncronizeViews(){
@@ -194,8 +194,8 @@ class pttt3dViewController: UIViewController {
     }
     
     // MARK: Transition
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         sceneView.stop(nil)
         sceneView.play(nil)
     }

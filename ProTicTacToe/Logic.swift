@@ -51,7 +51,7 @@ class Logic {
         }
     }
     
-    func check(type: String, a: Int, b: Int) -> Bool {                          // checks for won lines
+    func check(_ type: String, a: Int, b: Int) -> Bool {                          // checks for won lines
         
         switch type {
         case "cube":
@@ -79,7 +79,7 @@ class Logic {
         }
     }
     
-    func won(cube: Int, type: String) -> Bool {                                 // checks if either game or a bigCube is won (type)
+    func won(_ cube: Int, type: String) -> Bool {                                 // checks if either game or a bigCube is won (type)
             switch cube {
             case 111:
                 return (check(type, a:112, b:113) || check(type, a:211, b:311) || check(type, a:121, b: 131) ||
@@ -216,7 +216,7 @@ class Logic {
     }
     
     
-    func turn(hash: Int) -> Int {                                               // one turn
+    func turn(_ hash: Int) -> Int {                                               // one turn
         cubeData = Data.get_instance().get_data_by_hash(hash)
         id = cubeData[1]
         cubeOwner = cubeData[2]
